@@ -2,7 +2,7 @@ import './App.css';
 import react from 'react';
 import Navbar from './components/Navbar';
 import ItemList from './components/ItemList';
-import Item from './components/ItemList';
+import ItemDetail from './components/ItemDetail';
 
 import {
   BrowserRouter as Router,
@@ -29,21 +29,21 @@ class App extends react.Component{
           <Link to="/">Home</Link>
           <Link to="/categoria/:id">Categoria</Link>
           <Link to="/item/:id">Item</Link>
-          <Link to="/cart">Item</Link>
-          <Link to="/admin-items">Item</Link>
-          <Link to="/admin-item/:id">Item</Link>
+          {/* <Link to="/cart">Cart</Link>
+          <Link to="/admin-items">Admin items</Link>
+          <Link to="/admin-item/:id">Admin item</Link> */}
           <hr />
           <Switch>
             <Route exact path="/">
               <ItemList />
             </Route>
             <Route exact path="/categoria/:id">
-              <Item />
-            </Route>
-            <Route exact path="/item/:id">
               <ItemList />
             </Route>
-            <Route exact path="/cart">
+            <Route exact path="/item/:id">
+              <ItemDetail />
+            </Route>
+            {/* <Route exact path="/cart">
               <ItemList />
             </Route>
             <Route exact path="/admin-items">
@@ -51,7 +51,7 @@ class App extends react.Component{
             </Route>
             <Route exact path="/admin-item/:id">
               <ItemList />
-            </Route>
+            </Route> */}
           </Switch>
         </div>
       </Router>

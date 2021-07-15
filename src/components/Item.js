@@ -8,6 +8,8 @@ import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import accounting from 'accounting';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,20 +22,21 @@ const useStyles = makeStyles((theme) => ({
     height: 0,
     paddingTop: '56.25%', // 16:9
   },
-  expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
+  cardaction:{
+    marginLeft: '16rem',
   },
-  expandOpen: {
-    transform: 'rotate(180deg)',
-  }
 }));
 
 export default function Item({item}) {
   const classes = useStyles();
+  
+  const history = useHistory();
+  
+  const viewItemDetail = () => {
+    let path = `item/${item.Id}`; 
+    history.push(path);
+  }
+
 
   const precio = item.precio
   return (
@@ -63,9 +66,9 @@ export default function Item({item}) {
           Descripcion: {item.descripcion}
         </Typography>
       </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="Ver mas información" onClick>
-          
+      <CardActions className={classes.cardaction}>
+        <IconButton aria-label="Ver mas información" onClick={viewItemDetail}>
+          <VisibilityIcon></VisibilityIcon>
         </IconButton>
         
       </CardActions>
