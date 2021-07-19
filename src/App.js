@@ -1,12 +1,29 @@
 import './App.css';
-import react from 'react';
-import { Navbar, ItemList, ItemDetail, Cart, ItemCarga} from './components';
-import { BrowserRouter as Router,Switch,Route,Link} from "react-router-dom";
+import React, { useState } from 'react';
+import { Navbar, ItemList, ItemDetail, Cart, ItemCarga,Login} from './components';
+import { BrowserRouter as Router,Switch,Route} from "react-router-dom";
 
 
-class App extends react.Component{
-  
-  render(){
+// function setToken(userToken) {
+//   sessionStorage.setItem('token', JSON.stringify(userToken));
+// }
+
+function getToken() {
+  const tokenString = sessionStorage.getItem('token');
+  const userToken = JSON.parse(tokenString);
+  return userToken?.token
+}
+
+function App() {
+    // const [token, setToken] = useState();
+    // const { token, setToken } = useToken();
+    
+    const token = getToken();
+    // if(!token) {
+    //   return <Login setToken={setToken} />
+    // }
+
+    
     return (
       <Router>
         <div>
@@ -24,13 +41,14 @@ class App extends react.Component{
             <Route exact path='/admin/carga'>
               <ItemCarga/>
             </Route>
+            <Route exact path='/login'>
+              <Login/>
+            </Route>
           </Switch>
         </div>
       </Router>
     );
-  }
 }
-  
 
 
 export default App;

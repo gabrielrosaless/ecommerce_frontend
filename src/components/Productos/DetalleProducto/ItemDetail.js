@@ -43,7 +43,8 @@ export default function ItemDetail() {
             </Typography>
           }
           title={item[0].nombre}
-          subheader="en Stock"
+          subheader={<Typography className={classes.action} variant='h5' color='textSecondary'> Stock: {item[0].stock} </Typography>}
+         
         />
         <CardMedia
           className={classes.media}

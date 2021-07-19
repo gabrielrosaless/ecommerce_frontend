@@ -1,4 +1,4 @@
-import React from 'react';
+import React , {useState} from 'react';
 import {Card, CardHeader, CardMedia, CardContent, CardActions, IconButton, Typography} from '@material-ui/core';
 import accounting from 'accounting';
 import VisibilityIcon from '@material-ui/icons/Visibility';
@@ -9,6 +9,7 @@ import useStyles from './styles';
 export default function Item({item}) {
   const classes = useStyles();
 
+
   const history = useHistory();
   
   const viewItemDetail = () => {
@@ -17,7 +18,9 @@ export default function Item({item}) {
   }
   
   const precio = item.precio
+
   return (
+    
     <Card className={classes.root}>
       <CardHeader
         
@@ -32,7 +35,7 @@ export default function Item({item}) {
           </Typography>
         }
         title={item.nombre}
-        subheader="en Stock"
+        subheader="En stock (provisorio)"
       />
       <CardMedia
         className={classes.media}

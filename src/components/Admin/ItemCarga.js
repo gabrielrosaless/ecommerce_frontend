@@ -14,8 +14,6 @@ function ItemCarga() {
 
     const [stock, setStock] = useState(0)
 
-    const [state, setState] = useState({})
-
     const onNombreChange = (event) => {
         setNombre(event.currentTarget.value);
     }
