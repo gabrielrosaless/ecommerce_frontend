@@ -5,7 +5,7 @@ import useToken from '../../utils/useToken';
 import { Alert } from '@material-ui/lab';
 import { useParams } from "react-router-dom";
 
-function ItemCarga() {
+function ItemCarga() { //Es el ItemDetailAdmin
 
     /* ------------ VARIABLES ---------------- */
     const [nombre, setNombre] = useState("");

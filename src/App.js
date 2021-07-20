@@ -3,26 +3,25 @@ import React, { useState } from 'react';
 import { Navbar, ItemList, ItemDetail, Cart, ItemCarga,Login} from './components';
 import { BrowserRouter as Router,Switch,Route} from "react-router-dom";
 import useToken from './utils/useToken';
+import jwt from 'jwt-decode';
 
-// function setToken(userToken) {
-//   sessionStorage.setItem('token', JSON.stringify(userToken));
-// }
-
-// function getToken() {
-//   const tokenString = sessionStorage.getItem('token');
-//   const userToken = JSON.parse(tokenString);
-//   return userToken?.token
-// }
 
 function App() {
-    // const [token, setToken] = useState();
-    // const { token, setToken } = useToken();
-    const { token, setToken } = useToken();
-    //const token = getToken();
-    // if(!token) {
-    //   return <Login setToken={setToken} />
-    // }
 
+    const { token, setToken } = useToken();
+
+    
+
+    const Visible = ({ roles, children }) => {
+      
+      if (token){
+        const user = jwt(token);
+        const rolesMatch = roles && user.rol === roles;
+        return Boolean(rolesMatch) && children;
+      }
+      return false;
+    };
+    
     return (
       <Router>
         <div>
@@ -38,7 +37,9 @@ function App() {
               <Cart/>
             </Route>
             <Route exact path='/admin-items/:id'>
+            <Visible roles={1}>
               <ItemCarga/>
+            </Visible>
             </Route>
             <Route exact path='/login'>
               <Login/>
