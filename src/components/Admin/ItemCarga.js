@@ -1,18 +1,20 @@
-import React , {useState} from 'react'
-import {Input, Button,Typography} from '@material-ui/core';
+import React , {useState, useEffect} from 'react'
+import {Input, Button,Typography, Snackbar} from '@material-ui/core';
 import FileUpload from '../../utils/FileUpload'
+import useToken from '../../utils/useToken';
+import { Alert } from '@material-ui/lab';
+import { useParams } from "react-router-dom";
 
 function ItemCarga() {
 
+    /* ------------ VARIABLES ---------------- */
     const [nombre, setNombre] = useState("");
-
     const [descripcion, setDescripcion] = useState("");
-
     const [precio, setPrecio] = useState(0)
-
     const [marca, setMarca] = useState("")
-
     const [stock, setStock] = useState(0)
+    const { token, setToken } = useToken();
+    
 
     const onNombreChange = (event) => {
         setNombre(event.currentTarget.value);
@@ -21,7 +23,6 @@ function ItemCarga() {
     const onDescripcionChange = (event) => {
         setDescripcion(event.currentTarget.value);
     }
-
 
     const onPrecioChange = (event) => {
         setPrecio(event.currentTarget.value);
@@ -35,6 +36,55 @@ function ItemCarga() {
         setStock(event.currentTarget.value);
     }
 
+    /* ----------------------------------- */
+
+
+    /* -----Traigo los datos de un item ----- */ 
+    const [flag, setFlag] = useState(false); // Lo uso para saber si es put o post -> True = Edit
+    const { id } = useParams();
+
+    useEffect(() =>{
+        fetch(`http://localhost:4000/api/productos/item/${id}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.length>0){
+                    setFlag(true);
+                    setNombre(data[0].nombre);
+                    setDescripcion(data[0].descripcion);
+                    setStock(data[0].stock);
+                    setPrecio(data[0].precio);
+                    setMarca(data[0].marca);
+                }
+            })
+        },[])
+        
+
+    /* -------------------------------- */ 
+
+    /*----- Alertas ------ */ 
+    const [open, setOpen] = useState(false);
+    const [alertExito, setAlertExito] = useState(false);
+    const [mensaje, setMensaje] = useState("");
+   
+    const handleAlert = (exito) => {
+        
+        if (exito){
+            setAlertExito(true);
+        }else{
+            setOpen(true);
+        }
+        
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+        setOpen(false);
+        setAlertExito(false);
+    };
+    /*---------------------*/
+
 
     const onSubmit = (event) => {
         event.preventDefault();
@@ -47,19 +97,66 @@ function ItemCarga() {
             "stock":stock
         }
         
+        if (flag){
+            console.log("BANDERA: ", flag);
+            const requestOptionsPUT = {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json',
+                            'authorize': token || "" },
+                body: JSON.stringify(variables)
+            };
 
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(variables)
-        };
+            fetch(`http://localhost:4000/api/productos/update/${id}`, requestOptionsPUT)
+            .then(response => {
+                if (response.ok){
+                    setMensaje("Producto editado correctamente.")
+                    handleAlert(true)
+                    console.log(response)
+                }
+                else{
+                    setMensaje("Error! El producto no fue editado.");
+                    handleAlert(false);
+                    console.log('Respuesta de red OK pero respuesta HTTP no OK');
+                }
+            })
+            .catch(error => {
+                console.log("Hubo un problema con la petición Fetch: " + error.message);
+            });
+        }
+        else{
+            const requestOptionsPOST = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json',
+                            'authorize': token || "" },
+                body: JSON.stringify(variables)
+            };
+            fetch('http://localhost:4000/api/productos/add', requestOptionsPOST)
+                        .then(response => {
+                            console.log(response.ok);
+                            if (response.ok){
+                                setMensaje("Producto agregado correctamente.")
+                                handleAlert(true)
+                                console.log(response)
+                            }
+                            else{
+                                setMensaje("Error! El producto no fue agregado.");
+                                handleAlert(false);
+                                console.log('Respuesta de red OK pero respuesta HTTP no OK');
+                            }
+                        })
+                        .catch(error => {
+                            console.log("Hubo un problema con la petición Fetch: " + error.message);
+                        });
+        }
+
         
-        fetch('http://localhost:4000/api/productos/add', requestOptions)
-            .then(response => response.json())
-            .then(data => console.log(data));
-            // .then(data => setState({ postId: data.id }));
-    }
 
+        
+        
+
+
+    }
+    
     return (
         <div style={{maxWidth:'700px', margin:'2rem auto', marginTop:'10REM'}}>
             <div style={{textAlign: 'center', marginBottom:'2rem'}}>
@@ -105,7 +202,12 @@ function ItemCarga() {
             </Button>
 
             </form>
-
+            <Snackbar onClose={handleClose} open={open} autoHideDuration={3000}>
+                <Alert onClose={handleClose} severity="error">{mensaje}</Alert>
+            </Snackbar>
+            <Snackbar onClose={handleClose} open={alertExito} autoHideDuration={3000}>
+                <Alert onClose={handleClose} severity="success">{mensaje}</Alert>
+            </Snackbar>
         </div>
         
     )

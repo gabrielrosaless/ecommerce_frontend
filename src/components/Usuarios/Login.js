@@ -129,10 +129,6 @@ export default function Login() {
                 variant="contained"
                 color="primary"
                 className={classes.submit}
-                // onClick={() => {
-                //   handleSubmit();
-                //   handleAlert();
-                // }}
                 onClick={handleSubmit}
             >
                 Login
