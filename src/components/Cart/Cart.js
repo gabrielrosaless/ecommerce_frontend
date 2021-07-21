@@ -1,45 +1,57 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { Container, Typography, Button, Grid} from '@material-ui/core'
 import useStyles from './styles';
+import ItemCartContainer from './ItemCartContainer';
+import Total from './Total';
+import {useStateValue} from '../../StateProvider';
 
 
 const Cart = ({ cart }) => {
 
-    // const isEmpty = false;
+    const classes = useStyles();
 
-    // const classes = useStyles();
+    
+    const [items, setItems] = useState([]);
 
-    // const EmptyCart  = () => (
-    //     <Typography variant='subtitle1'> No tienes items en el carrito. Comienza a agregarlos!</Typography>
-    // );
+    const [{basket}, dispatch] = useStateValue();
 
-    // const FilledCart = () => (
-    //     <>
-    //         <Grid container spacing={3}>
-    //             {cart.map((item) => {
-    //                 <Grid item xs={12} sm={4} key={item.Id}>
-    //                     {/* <CartItem></CartItem> */}
-    //                     <div>{item.nombre}</div>
-    //                 </Grid>
-    //             }) }
-    //         </Grid>
-    //         <div className={classes.cardDetails}>
-    //             <Typography variant="h4">Subtotal:</Typography>
-    //             <div>
-    //                 <Button className={classes.emptyButton} size='large' type='button' variant='contained' color='secondary'> Empty cart </Button>
-    //                 <Button className={classes.checkoutButton} size='large' type='button' variant='contained' color='primaty'> Checkout </Button>
-    //             </div>
-    //         </div>
-    //     </>
-    // );
+    // useEffect(() =>{
+    //     fetch("http://localhost:4000/api/productos/")
+    //     .then(res => res.json())
+    //     .then(data => setItems(data));
+    // },[])
+
+    function FormRow(){
+        return(
+            <React.Fragment>
+                {basket?.map((item) => (
+                    <Grid item xs={12} sm={8} md={6} lg={4}>
+                        {/* <Item key={item.id} product={item}/> */}
+                        <ItemCartContainer key={item.Id} item={item}/>
+                    </Grid>
+                ))}
+            </React.Fragment>
+        );
+    }
 
     return (
-        <div></div>
-        // <Container>
-        //     <div className={classes.toolbar} ></div>
-        //     <Typography className={classes.title} variant='h3'> Tu carro de compras </Typography>
-        //     { isEmpty ? <EmptyCart/> : <FilledCart/>}
-        // </Container>
+        <div className={classes.root}>
+            <Grid container spacing={3}>
+                <Grid item xs={12}>
+                    <Typography align='center' gutterBottom variant='h4'>
+                        Shopping Cart
+                    </Typography>
+                </Grid>
+                <Grid item xs={12} sm={8} md={9} container spacing={2}>
+                    <FormRow/>
+                </Grid>
+                <Grid item xs={12} sm={4} md={3}>
+                    <Typography align='center' gutterBottom variant='h4'>
+                        <Total/>
+                    </Typography>
+                </Grid>
+            </Grid>
+        </div>
     )
 }
 

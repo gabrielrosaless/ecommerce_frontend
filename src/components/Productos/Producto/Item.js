@@ -1,10 +1,12 @@
 import React , {useState} from 'react';
 import {Card, CardHeader, CardMedia, CardContent, CardActions, IconButton, Typography} from '@material-ui/core';
 import accounting from 'accounting';
-import VisibilityIcon from '@material-ui/icons/Visibility';
+import AddShoppingCart  from '@material-ui/icons/AddShoppingCart';
 import { useHistory } from "react-router-dom";
 import useStyles from './styles';
-
+import {ItemCount} from '../../index';
+import {actionTypes} from '../../../reducer';
+import {useStateValue} from '../../../StateProvider';
 
 export default function Item({item}) {
   const classes = useStyles();
@@ -18,6 +20,23 @@ export default function Item({item}) {
   }
   
   const precio = item.precio
+
+  const [{basket}, dispatch] = useStateValue();
+
+  const addToBasket = () =>{
+    dispatch({
+      type:actionTypes.ADD_TO_BASKET,
+      item:{
+        id:item.Id,
+        nombre:item.nombre,
+        marca:item.marca,
+        precio:item.precio,
+        stock:item.stock,
+        imagen:item.imagen,
+        descripcion:item.descripcion
+      }
+    })
+  }
 
   return (
     
@@ -37,7 +56,7 @@ export default function Item({item}) {
         title={item.nombre}
         subheader="En stock (provisorio)"
       />
-      <CardMedia
+      <CardMedia onClick={viewItemDetail}
         className={classes.media}
         image="https://showsport.vteximg.com.br/arquivos/ids/693220-1000-1000/NIK-BQ7197008-20-1-.jpg?v=637200652669270000"
         title="Nike air1"
@@ -45,13 +64,14 @@ export default function Item({item}) {
       <CardContent>
         <div className={classes.cardContent}>
           <Typography variant="body2" color="textSecondary" component="p">
-            Descripcion: {item.descripcion}
+            Descripcion: {item.descripcion} 
           </Typography>
         </div>
       </CardContent>
       <CardActions className={classes.cardActions}>
-        <IconButton aria-label="Ver mas información" onClick={viewItemDetail}>
-          <VisibilityIcon></VisibilityIcon>
+        <ItemCount stockItem={item.stock}></ItemCount>
+        <IconButton aria-label="Agregar al carrito">
+          <AddShoppingCart onClick={addToBasket}/>
         </IconButton>
         
       </CardActions>

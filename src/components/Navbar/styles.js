@@ -39,7 +39,12 @@ export default makeStyles((theme) => ({
     // flexGrow: 1,
     alignItems: 'center',
     display: 'flex',
-    textDecoration: 'none'
+    textDecoration: 'none',
+    color: '#FFF'
+  },
+  loginButton:{
+    color:'#FFF',
+    textDecoration:'none'
   },
   image: {
     marginRight: '10px',
