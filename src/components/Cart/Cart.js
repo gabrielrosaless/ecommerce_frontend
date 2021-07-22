@@ -4,36 +4,28 @@ import useStyles from './styles';
 import ItemCartContainer from './ItemCartContainer';
 import Total from './Total';
 import {useStateValue} from '../../StateProvider';
-
+import { getBasketTotal } from '../../reducer';
 
 const Cart = ({ cart }) => {
 
     const classes = useStyles();
 
-    
-    const [items, setItems] = useState([]);
 
     const [{basket}, dispatch] = useStateValue();
 
-    // useEffect(() =>{
-    //     fetch("http://localhost:4000/api/productos/")
-    //     .then(res => res.json())
-    //     .then(data => setItems(data));
-    // },[])
 
     function FormRow(){
         return(
             <React.Fragment>
                 {basket?.map((item) => (
                     <Grid item xs={12} sm={8} md={6} lg={4}>
-                        {/* <Item key={item.id} product={item}/> */}
                         <ItemCartContainer key={item.Id} item={item}/>
                     </Grid>
                 ))}
             </React.Fragment>
         );
     }
-
+    console.log(basket);
     return (
         <div className={classes.root}>
             <Grid container spacing={3}>

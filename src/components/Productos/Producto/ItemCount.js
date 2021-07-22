@@ -1,19 +1,18 @@
-import React, {useState} from 'react'
-import { Input , Button, ButtonGroup} from '@material-ui/core';
-import RemoveIcon from '@material-ui/icons/Remove';
-import AddIcon from '@material-ui/icons/Add';
+import React from 'react'
+import {Button, ButtonGroup} from '@material-ui/core';
 
 
-function ItemCount({stockItem}) {
 
-    const [cantidad, setCantidad] = useState(1)
+function ItemCount({stockItem, setCantidad, cantidad}) {
 
+    //const [cantidad, setCantidad] = useState(1)
+    
     const increaseCant = () => {
         const count = cantidad
 
         if (count >= stockItem) return;
-
         setCantidad(count+1);
+    
     }
     
     const decreaseCant = () => {
@@ -21,15 +20,16 @@ function ItemCount({stockItem}) {
 
         if (count <= 1) return;
 
-        setCantidad(count-1);    
+        setCantidad(count-1);  
     }
 
+    
     return (
         <div className="sotckCounter d-inline">
             
             <ButtonGroup variant="contained" color="primary" aria-label="outlined primary button group">
                 <Button onClick={decreaseCant}>-</Button>
-                <Button aria-readonly disabled={true}>{cantidad}</Button>
+                <Button aria-readonly disabled={true}><strong>{cantidad}</strong></Button>
                 <Button onClick={increaseCant}>+</Button>
             </ButtonGroup>
         </div>

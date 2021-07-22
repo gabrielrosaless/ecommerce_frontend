@@ -33,11 +33,38 @@ export default function Item({item}) {
         precio:item.precio,
         stock:item.stock,
         imagen:item.imagen,
-        descripcion:item.descripcion
+        descripcion:item.descripcion,
+        cantidad:cant
       }
     })
   }
 
+  //const [cant, setCant] = useState(1)
+
+  // const increaseCant = () => {
+  //     const count = cantidad
+
+  //     // if (count >= stockItem) return;
+  //     if (count >= item.stock) return;
+
+  //     setCantidad(count+1);
+  // }
+  
+  // const decreaseCant = () => {
+  //     const count = cantidad
+
+  //     if (count <= 1) return;
+
+  //     setCantidad(count-1);    
+  // }
+  
+  const [cant, setCant] = useState(1);
+
+  // const handleChange = (valor) => {
+  //   setCant(valor);
+  // }
+
+  console.log(cant);
   return (
     
     <Card className={classes.root}>
@@ -69,7 +96,9 @@ export default function Item({item}) {
         </div>
       </CardContent>
       <CardActions className={classes.cardActions}>
-        <ItemCount stockItem={item.stock}></ItemCount>
+        {/* <ItemCount decreaseCant={decreaseCant} increaseCant={increaseCant} cantidad={cantidad}></ItemCount> */}
+        {/* <ItemCount  stockItem={item.stock} onChange={handleChange} cant={cant}></ItemCount> */}
+        <ItemCount  stockItem={item.stock} setCantidad={setCant} cantidad={cant}></ItemCount>
         <IconButton aria-label="Agregar al carrito">
           <AddShoppingCart onClick={addToBasket}/>
         </IconButton>

@@ -1,9 +1,10 @@
 import './App.css';
 import React, { useState } from 'react';
-import { Navbar, ItemList, ItemDetail, Cart, ItemCarga,Login} from './components';
+import { Navbar, ItemList, ItemDetail, Cart, ItemCarga,Login, SignUp} from './components';
 import { BrowserRouter as Router,Switch,Route} from "react-router-dom";
 import useToken from './utils/useToken';
 import jwt from 'jwt-decode';
+
 
 
 function App() {
@@ -43,6 +44,9 @@ function App() {
             </Route>
             <Route exact path='/login'>
               <Login/>
+            </Route>
+            <Route exact path='/signup'>
+              <SignUp/>
             </Route>
           </Switch>
         </div>

@@ -12,10 +12,30 @@ export const getBasketTotal = (basket) => {
     
     let acu = 0;
     basket?.forEach(function(elemento, indice, array) {
-        acu += elemento.precio
+        acu += (elemento.precio * elemento.cantidad)
     })
     return acu;
-    // console.log(basket?.reduce((amount,item) => item.precio + amount, 0))
+    
+}
+
+export const modifyBasketCant = (basket, id , cant) => {
+
+    basket?.forEach(function(prod, i, array) {
+        if (prod.id === id){
+            prod.cantidad = cant
+        }
+    })
+}
+
+
+export const getBasketCant = (basket) => {
+    
+    let acu = 0;
+    basket?.forEach(function(elemento, indice, array) {
+        acu += elemento.cantidad
+    })
+    return acu;
+    
 }
 
 const reducer = (state,action) => {
