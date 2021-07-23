@@ -23,6 +23,20 @@ export default function Item({item}) {
 
   const [{basket}, dispatch] = useStateValue();
 
+  /**/
+
+  // let str = 'bmltZXNoZGV1amEuY29t';
+  // let buff = new Buffer(str, 'base64');
+  // let base64ToStringNew = buff.toString('ascii');
+  const buf = Buffer.from(item.imagen, 'base64');
+  //const base64ToString = Buffer.from(item.imagen,'base64').toString('ascii');
+  
+  console.log('imagen:', buf.toString('ascii'));
+
+  //////////////
+
+
+
   const addToBasket = () =>{
     dispatch({
       type:actionTypes.ADD_TO_BASKET,
@@ -32,39 +46,17 @@ export default function Item({item}) {
         marca:item.marca,
         precio:item.precio,
         stock:item.stock,
-        imagen:item.imagen,
+        //imagen:item.imagen,
         descripcion:item.descripcion,
         cantidad:cant
       }
     })
   }
 
-  //const [cant, setCant] = useState(1)
 
-  // const increaseCant = () => {
-  //     const count = cantidad
-
-  //     // if (count >= stockItem) return;
-  //     if (count >= item.stock) return;
-
-  //     setCantidad(count+1);
-  // }
-  
-  // const decreaseCant = () => {
-  //     const count = cantidad
-
-  //     if (count <= 1) return;
-
-  //     setCantidad(count-1);    
-  // }
-  
   const [cant, setCant] = useState(1);
 
-  // const handleChange = (valor) => {
-  //   setCant(valor);
-  // }
 
-  console.log(cant);
   return (
     
     <Card className={classes.root}>

@@ -1,6 +1,5 @@
 import React , {useState, useEffect} from 'react'
 import {Input, Button,Typography, Snackbar} from '@material-ui/core';
-import FileUpload from '../../utils/FileUpload'
 import useToken from '../../utils/useToken';
 import { Alert } from '@material-ui/lab';
 import { useParams } from "react-router-dom";
@@ -14,7 +13,8 @@ function ItemCarga() { //Es el ItemDetailAdmin
     const [marca, setMarca] = useState("")
     const [stock, setStock] = useState(0)
     const { token, setToken } = useToken();
-    
+
+    const [imagen, setImagen] = useState("");
 
     const onNombreChange = (event) => {
         setNombre(event.currentTarget.value);
@@ -36,9 +36,20 @@ function ItemCarga() { //Es el ItemDetailAdmin
         setStock(event.currentTarget.value);
     }
 
+    ///////--------------------------------
+
+    const onFileChange = (e) => {
+        // console.log('file to upload:', e.target.value);
+        // let file = e.target.value;
+        // if (file){
+        //     let buf = Buffer.from(file, 'base64');
+        //     console.log(buf.toString('base64'));
+        // }
+    }
+
     /* ----------------------------------- */
 
-
+    
     /* -----Traigo los datos de un item ----- */ 
     const [flag, setFlag] = useState(false); // Lo uso para saber si es put o post -> True = Edit
     const { id } = useParams();
@@ -88,17 +99,19 @@ function ItemCarga() { //Es el ItemDetailAdmin
 
     const onSubmit = (event) => {
         event.preventDefault();
+        const preview = document.getElementById('picture');
 
         const variables = {
             "nombre": nombre,
             "precio":precio,
             "descripcion":descripcion,
             "marca":marca,
-            "stock":stock
+            "stock":stock,
+            "imagen":imagen,
         }
         
         if (flag){
-            console.log("BANDERA: ", flag);
+            
             const requestOptionsPUT = {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json',
@@ -152,7 +165,7 @@ function ItemCarga() { //Es el ItemDetailAdmin
         
 
         
-        
+        preview.src = 'data:image/png;base64,' + imagen
 
 
     }
@@ -165,8 +178,10 @@ function ItemCarga() { //Es el ItemDetailAdmin
 
 
             <form onSubmit={onSubmit}>
+            
+            <input type='text' name='image' id='file' onChange={onFileChange}></input>
+            <image id='picture' src=""></image>
 
-            {/* <FileUpload/> */}
             <br/>
             <br/>
 

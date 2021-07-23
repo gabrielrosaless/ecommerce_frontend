@@ -4,9 +4,10 @@ import useStyles from './styles';
 import ItemCartContainer from './ItemCartContainer';
 import Total from './Total';
 import {useStateValue} from '../../StateProvider';
-import { getBasketTotal } from '../../reducer';
+import { getBasketTotal, getBasketCant } from '../../reducer';
+import { BallotSharp } from '@material-ui/icons';
 
-const Cart = ({ cart }) => {
+const Cart = () => {
 
     const classes = useStyles();
 
@@ -15,13 +16,20 @@ const Cart = ({ cart }) => {
 
 
     function FormRow(){
+        if (basket?.length === 0){
+            return(
+                <React.Fragment> 
+                    <Typography align='center' variant='h5'>Aun no hay productos en el carrito.</Typography>
+                </React.Fragment>
+            )
+        }
         return(
             <React.Fragment>
                 {basket?.map((item) => (
                     <Grid item xs={12} sm={8} md={6} lg={4}>
                         <ItemCartContainer key={item.Id} item={item}/>
-                    </Grid>
-                ))}
+                    </Grid>))
+                }
             </React.Fragment>
         );
     }

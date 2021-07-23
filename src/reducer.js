@@ -5,7 +5,7 @@ export const initialState = {
 
 export const actionTypes = {
     ADD_TO_BASKET: 'ADD_TO_BASKET',
-    REMOVE_ITEM: 'REMOVE_ITEM'
+    REMOVE_ITEM: 'REMOVE_ITEM',
 }
 
 export const getBasketTotal = (basket) => {
@@ -38,8 +38,9 @@ export const getBasketCant = (basket) => {
     
 }
 
+
 const reducer = (state,action) => {
-    console.log(action);
+
     switch(action.type){
         case 'ADD_TO_BASKET':
             return{

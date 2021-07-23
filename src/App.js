@@ -23,13 +23,14 @@ function App() {
       return false;
     };
     
+    
     return (
       <Router>
         <div>
           <Navbar/>
           <Switch>
             <Route exact path='/'>
-              <ItemList/>
+              <ItemList />
             </Route>
             <Route exact path='/item/:id'>
               <ItemDetail/>
@@ -38,9 +39,9 @@ function App() {
               <Cart/>
             </Route>
             <Route exact path='/admin-items/:id'>
-            <Visible roles={1}>
-              <ItemCarga/>
-            </Visible>
+              <Visible roles={1}>
+                <ItemCarga/>
+              </Visible>
             </Route>
             <Route exact path='/login'>
               <Login/>

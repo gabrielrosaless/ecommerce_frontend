@@ -1,4 +1,4 @@
-import React , {useState} from 'react';
+import React , {useState, useEffect} from 'react';
 import {Card, CardHeader, CardMedia, CardContent, CardActions, IconButton, Typography} from '@material-ui/core';
 import accounting from 'accounting';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -21,6 +21,12 @@ export default function ItemCartContainer({item:{id,nombre,imagen,precio,stock,d
 
   const [cant, setCant] = useState(cantidad);
 
+  
+  useEffect(() => {
+    console.log('renderize');
+    
+  }, [])
+  
   modifyBasketCant(basket,id,cant);
   
 

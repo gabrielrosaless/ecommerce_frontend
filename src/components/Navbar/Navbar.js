@@ -34,7 +34,7 @@ export default function ButtonAppBar() {
             </IconButton>
           </div>
 
-          <Link to='Login' className={classes.loginButton}>
+          <Link to='/Login' className={classes.loginButton}>
             <Button color="inherit" className={classes.loginButton}>Login</Button>
 
           </Link>

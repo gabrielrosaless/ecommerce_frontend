@@ -4,8 +4,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import useStyles from './styles';
 import { Alert } from '@material-ui/lab';
 import { Snackbar } from '@material-ui/core';
-import { useHistory } from "react-router-dom";
-
+import {Link as RouteLink, useHistory } from "react-router-dom";
+ 
 
 
 function Copyright() {
@@ -140,9 +140,9 @@ export default function Login() {
                 </Link>
                 </Grid>
                 <Grid item>
-                <Link href="/signup" variant="body2">
+                <RouteLink to="/signup" variant="body2">
                     {"Don't have an account? Sign Up"}
-                </Link>
+                </RouteLink>
                 </Grid>
             </Grid>
             </form>

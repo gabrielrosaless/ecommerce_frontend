@@ -2,7 +2,6 @@ import React from 'react'
 import {Button, ButtonGroup} from '@material-ui/core';
 
 
-
 function ItemCount({stockItem, setCantidad, cantidad}) {
 
     //const [cantidad, setCantidad] = useState(1)
@@ -31,6 +30,7 @@ function ItemCount({stockItem, setCantidad, cantidad}) {
                 <Button onClick={decreaseCant}>-</Button>
                 <Button aria-readonly disabled={true}><strong>{cantidad}</strong></Button>
                 <Button onClick={increaseCant}>+</Button>
+              
             </ButtonGroup>
         </div>
         

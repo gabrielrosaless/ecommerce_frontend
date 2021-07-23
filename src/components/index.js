@@ -7,5 +7,5 @@ export { default as ItemCarga} from './Admin/ItemCarga';
 export { default as Login} from './Usuarios/Login';
 export { default as ItemCount } from './Productos/Producto/ItemCount';
 export { default as SignUp } from './Usuarios/SignUp';
-
+export { default as Pagination } from './Productos/Pagination'
 
