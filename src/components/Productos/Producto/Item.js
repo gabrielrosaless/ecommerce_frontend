@@ -28,10 +28,10 @@ export default function Item({item}) {
   // let str = 'bmltZXNoZGV1amEuY29t';
   // let buff = new Buffer(str, 'base64');
   // let base64ToStringNew = buff.toString('ascii');
-  const buf = Buffer.from(item.imagen, 'base64');
+  //const buf = Buffer.from(item.imagen, 'base64');
   //const base64ToString = Buffer.from(item.imagen,'base64').toString('ascii');
   
-  console.log('imagen:', buf.toString('ascii'));
+  //console.log('imagen:', buf.toString('ascii'));
 
   //////////////
 

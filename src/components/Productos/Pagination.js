@@ -1,7 +1,7 @@
 import React from 'react';
 import TablePagination from '@material-ui/core/TablePagination';
 
-export default function Pagination({page, rowsPerPage, setPage, setRowsPerPage}) {
+export default function Pagination({page, rowsPerPage, setPage, setRowsPerPage, total}) {
 
 
     const handleChangePage = (event, newPage) => {
@@ -10,13 +10,14 @@ export default function Pagination({page, rowsPerPage, setPage, setRowsPerPage})
     
       const handleChangeRowsPerPage = (event) => {
         setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
+        setPage(1);
       };
       
   return (
     <TablePagination
       component="div"
-      count={100}
+      count={total}
+      rowsPerPageOptions={[5,10,20]} 
       page={page}
       onPageChange={handleChangePage}
       rowsPerPage={rowsPerPage}

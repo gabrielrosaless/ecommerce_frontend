@@ -51,7 +51,7 @@ export default function Login() {
     };
 
     const redirectList = () => {
-      history.push('/')
+      history.push('')
     }
 
     const handleClose = (event, reason) => {
