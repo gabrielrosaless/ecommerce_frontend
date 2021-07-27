@@ -33,7 +33,8 @@ const Cart = () => {
             </React.Fragment>
         );
     }
-    console.log(basket);
+
+    
     return (
         <div className={classes.root}>
             <Grid container spacing={3}>

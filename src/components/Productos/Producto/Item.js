@@ -5,7 +5,7 @@ import AddShoppingCart  from '@material-ui/icons/AddShoppingCart';
 import { useHistory } from "react-router-dom";
 import useStyles from './styles';
 import {ItemCount} from '../../index';
-import {actionTypes} from '../../../reducer';
+import {actionTypes, isInCart} from '../../../reducer';
 import {useStateValue} from '../../../StateProvider';
 
 export default function Item({item}) {
@@ -23,21 +23,15 @@ export default function Item({item}) {
 
   const [{basket}, dispatch] = useStateValue();
 
-  /**/
-
-  // let str = 'bmltZXNoZGV1amEuY29t';
-  // let buff = new Buffer(str, 'base64');
-  // let base64ToStringNew = buff.toString('ascii');
-  //const buf = Buffer.from(item.imagen, 'base64');
-  //const base64ToString = Buffer.from(item.imagen,'base64').toString('ascii');
-  
-  //console.log('imagen:', buf.toString('ascii'));
-
-  //////////////
-
-
 
   const addToBasket = () =>{
+    var bool = isInCart(basket, item.Id);
+    console.log(bool);
+    if (bool) {
+      console.log("Ya existe en el carrito");
+      return;
+    }
+
     dispatch({
       type:actionTypes.ADD_TO_BASKET,
       item:{
@@ -46,7 +40,7 @@ export default function Item({item}) {
         marca:item.marca,
         precio:item.precio,
         stock:item.stock,
-        //imagen:item.imagen,
+        imagen:item.imagen,
         descripcion:item.descripcion,
         cantidad:cant
       }
@@ -68,7 +62,6 @@ export default function Item({item}) {
             variant='h5'
             color='textSecondary'
           >
-
             {accounting.formatMoney(precio,'$')}
           </Typography>
         }
@@ -77,22 +70,20 @@ export default function Item({item}) {
       />
       <CardMedia onClick={viewItemDetail}
         className={classes.media}
-        image="https://showsport.vteximg.com.br/arquivos/ids/693220-1000-1000/NIK-BQ7197008-20-1-.jpg?v=637200652669270000"
+        image={item.imagen}
         title="Nike air1"
       />
-      <CardContent>
+      {/* <CardContent>
         <div className={classes.cardContent}>
           <Typography variant="body2" color="textSecondary" component="p">
             Descripcion: {item.descripcion} 
           </Typography>
         </div>
-      </CardContent>
+      </CardContent> */}
       <CardActions className={classes.cardActions}>
-        {/* <ItemCount decreaseCant={decreaseCant} increaseCant={increaseCant} cantidad={cantidad}></ItemCount> */}
-        {/* <ItemCount  stockItem={item.stock} onChange={handleChange} cant={cant}></ItemCount> */}
         <ItemCount  stockItem={item.stock} setCantidad={setCant} cantidad={cant}></ItemCount>
-        <IconButton aria-label="Agregar al carrito">
-          <AddShoppingCart onClick={addToBasket}/>
+        <IconButton aria-label="Agregar al carrito" onClick={addToBasket}>
+          <AddShoppingCart/>
         </IconButton>
         
       </CardActions>

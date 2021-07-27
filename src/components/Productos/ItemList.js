@@ -8,7 +8,7 @@ export default function ItemList() { //{pagination:{size , page}}
   const classes = useStyles();
 
   const [items, setItems] = useState([]);
-  const [total, setTotal] = useState([]);
+  const [total, setTotal] = useState(0);
 
   const [page, setPage] =useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);

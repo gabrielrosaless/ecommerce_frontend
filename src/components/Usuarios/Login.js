@@ -120,7 +120,7 @@ export default function Login() {
                 fullWidth
                 name="contraseña"
                 label="Contraseña"
-                type="contraseña"
+                type="password"
                 id="contraseña"      
                 onChange={e => setContraseña(e.target.value)}
             />

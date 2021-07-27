@@ -60,13 +60,14 @@ export default function ButtonAppBar({token}) {
                 </Link>
               </IconButton> */}
             {/* </Visible> */}
-            <IconButton aria-label='Mostrar items carrito' color='inherit'>
-              <Badge badgeContent={basket.length} color='secondary'>
-                <Link to='Cart' style={{color: '#FFF'}}>
-                  <ShoppingCart fontSize='large'/>
-                </Link> 
-              </Badge>
-            </IconButton>
+            <Link to='Cart' style={{color: '#FFF'}}>
+              <IconButton aria-label='Mostrar items carrito' color='inherit'>
+                <Badge badgeContent={basket.length} color='secondary'>
+                  
+                    <ShoppingCart fontSize='large'/>
+                </Badge>
+              </IconButton>
+            </Link> 
           </div>
 
           <Link to='/Login' className={classes.loginButton}>

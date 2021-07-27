@@ -27,7 +27,6 @@ export default function ItemDetail() {
 
 
   let precio = 0;
-  
   if (item[0] !== undefined){
     precio = item[0].precio
     return (
@@ -48,7 +47,7 @@ export default function ItemDetail() {
         />
         <CardMedia
           className={classes.media}
-          image="https://showsport.vteximg.com.br/arquivos/ids/693220-1000-1000/NIK-BQ7197008-20-1-.jpg?v=637200652669270000"
+          image={item[0].imagen}
           title="Nike air1"
         />
         <CardContent>

@@ -8,8 +8,11 @@ export default makeStyles((theme) => ({
         marginTop: '1rem',
     },
     media: {
-      height: 0,
+      //height: 0,
       paddingTop: '56.25%', // 16:9
+      //width: '200px',
+      width:'100%',
+      height:'auto'
     },
     cardActions:{
       marginLeft: '16rem',

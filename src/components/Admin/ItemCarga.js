@@ -4,6 +4,7 @@ import useToken from '../../utils/useToken';
 import { Alert } from '@material-ui/lab';
 import { useParams } from "react-router-dom";
 
+
 function ItemCarga() { //Es el ItemDetailAdmin
 
     /* ------------ VARIABLES ---------------- */
@@ -36,18 +37,8 @@ function ItemCarga() { //Es el ItemDetailAdmin
         setStock(event.currentTarget.value);
     }
 
-    ///////--------------------------------
+    /*-------------------------------------------*/
 
-    const onFileChange = (e) => {
-        // console.log('file to upload:', e.target.value);
-        // let file = e.target.value;
-        // if (file){
-        //     let buf = Buffer.from(file, 'base64');
-        //     console.log(buf.toString('base64'));
-        // }
-    }
-
-    /* ----------------------------------- */
 
     
     /* -----Traigo los datos de un item ----- */ 
@@ -99,7 +90,6 @@ function ItemCarga() { //Es el ItemDetailAdmin
 
     const onSubmit = (event) => {
         event.preventDefault();
-        const preview = document.getElementById('picture');
 
         const variables = {
             "nombre": nombre,
@@ -122,9 +112,9 @@ function ItemCarga() { //Es el ItemDetailAdmin
             fetch(`http://localhost:4000/api/productos/update/${id}`, requestOptionsPUT)
             .then(response => {
                 if (response.ok){
-                    setMensaje("Producto editado correctamente.")
-                    handleAlert(true)
-                    console.log(response)
+                    setMensaje("Producto editado correctamente.");
+                    handleAlert(true);
+                    console.log(response);
                 }
                 else{
                     setMensaje("Error! El producto no fue editado.");
@@ -161,15 +151,56 @@ function ItemCarga() { //Es el ItemDetailAdmin
                             console.log("Hubo un problema con la petición Fetch: " + error.message);
                         });
         }
-
-        
-
-        
-        preview.src = 'data:image/png;base64,' + imagen
-
-
     }
+
+    const [state, setState] = useState({file: null,base64URL: ""})
     
+    const getBase64 = file => {
+        return new Promise(resolve => {
+          let baseURL = "";
+          // Make new FileReader
+          let reader = new FileReader();
+    
+          // Convert the file to base64 text
+          reader.readAsDataURL(file);
+    
+          // on reader load somthing...
+          reader.onload = () => {
+            // Make a fileInfo Object
+            //console.log("Called", reader);
+            baseURL = reader.result;
+            //console.log('BASE URL:', baseURL);
+            resolve(baseURL);
+            
+          };
+        });
+    };
+    
+    const handleFileInputChange = e => {
+        //console.log(e.target.files[0]);
+        let { file } = state;
+    
+        file = e.target.files[0];
+    
+        getBase64(file)
+        .then(result => {
+            file["base64"] = result;
+            //console.log("File Is", file);
+            setState({
+              base64URL: result,
+              file
+            });
+            setImagen(result);
+        })
+        .catch(err => {
+            console.log(err);
+        });
+    
+        setState({
+          file: e.target.files[0]
+        });
+    };
+
     return (
         <div style={{maxWidth:'700px', margin:'2rem auto', marginTop:'10REM'}}>
             <div style={{textAlign: 'center', marginBottom:'2rem'}}>
@@ -179,40 +210,39 @@ function ItemCarga() { //Es el ItemDetailAdmin
 
             <form onSubmit={onSubmit}>
             
-            <input type='text' name='image' id='file' onChange={onFileChange}></input>
-            <image id='picture' src=""></image>
+            <input type="file" name="file" onChange={handleFileInputChange} />
 
             <br/>
             <br/>
 
             <Typography variant='h5'>Nombre</Typography>
-            <Input fullWidth='true' onChange={onNombreChange} value={nombre}/>
+            <Input fullWidth={true} onChange={onNombreChange} value={nombre}/>
             
 
             <br/>
             <br/>
             <Typography variant='h5'>Descripcion</Typography>
-            <Input fullWidth='true' onChange={onDescripcionChange} value={descripcion}/>
+            <Input fullWidth={true} onChange={onDescripcionChange} value={descripcion}/>
 
             <br/>
             <br/>
             <Typography variant='h5'>Precio ($) </Typography>
-            <Input fullWidth='true' onChange={onPrecioChange} value={precio} type='number'/>
+            <Input fullWidth={true} onChange={onPrecioChange} value={precio} type='number'/>
 
 
             <br/>
             <br/>
             <Typography variant='h5'>Marca </Typography>
-            <Input fullWidth='true' onChange={onMarcaChange} value={marca}/>
+            <Input fullWidth={true} onChange={onMarcaChange} value={marca}/>
 
             <br/>
             <br/>
             <Typography variant='h5'>Stock </Typography>
-            <Input fullWidth='true' onChange={onStockChange} value={stock} type='number'/>
+            <Input fullWidth={true} onChange={onStockChange} value={stock} type='number'/>
 
             <br/>
             <br/>
-            <Button size='large' type='button' variant='contained' color='primaty' onClick={onSubmit}> 
+            <Button size='large' type='button' variant='contained' style={{backgroundColor:'#00722e', color:'#FFFFFF', float:'right', marginBottom:'40px'}} onClick={onSubmit}> 
                 Guardar 
             </Button>
 

@@ -6,6 +6,7 @@ export const initialState = {
 export const actionTypes = {
     ADD_TO_BASKET: 'ADD_TO_BASKET',
     REMOVE_ITEM: 'REMOVE_ITEM',
+    CLEAN_BASKET:'CLEAN_BASKET'
 }
 
 export const getBasketTotal = (basket) => {
@@ -35,7 +36,21 @@ export const getBasketCant = (basket) => {
         acu += elemento.cantidad
     })
     return acu;
-    
+}
+
+export const isInCart = (basket, id) => {
+    console.log(basket);
+    console.log(basket.length);
+    if (basket !== undefined && basket !== null && basket.length > 0){
+        for (let item of basket) {
+            if (id === item.id) {
+                return true;
+            }
+        }
+    }
+    else{
+        return false;
+    }
 }
 
 
@@ -51,6 +66,11 @@ const reducer = (state,action) => {
             return {
                 ...state,
                 basket: state.basket.filter((x) => x.id !== action.id)
+            }
+        case 'CLEAN_BASKET':
+            return{
+                ...state,
+                basket: []
             }
         default: return state;
         

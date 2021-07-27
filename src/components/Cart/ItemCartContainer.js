@@ -22,11 +22,6 @@ export default function ItemCartContainer({item:{id,nombre,imagen,precio,stock,d
   const [cant, setCant] = useState(cantidad);
 
   
-  useEffect(() => {
-    console.log('renderize');
-    
-  }, [])
-  
   modifyBasketCant(basket,id,cant);
   
 
@@ -50,7 +45,7 @@ export default function ItemCartContainer({item:{id,nombre,imagen,precio,stock,d
       />
       <CardMedia
         className={classes.media}
-        image="https://i.pinimg.com/564x/dc/9e/aa/dc9eaa1d749ee415124fa05840fce6dd.jpg"
+        image={imagen}
         title="Campera phoenix"
       />
       <CardActions disableSpacing className={classes.cardActions}>
