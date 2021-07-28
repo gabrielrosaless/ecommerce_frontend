@@ -4,13 +4,13 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## IMPORTANTE:
-Para iniciar el proyecto es necesario tener el backend corriendo. El cual se encuentra en este repositorio:
+Para iniciar el proyecto es necesario tener el backend corriendo. El cual se encuentra en el siguiente repositorio:
 'https://github.com/gabrielrosaless/ecommerce_extrados'. 
 
 
 ### Quick Start
 
-Para iniciar el sistema, podes correr (parado en el directorio raiz - ecommerce_frontend):
+Para iniciar el sistema, debes ejecutar el siguiente comando, parado en el directorio raiz (/ecommerce_frontend):
 
 ### `npm start`
 
