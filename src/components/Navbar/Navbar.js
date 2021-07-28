@@ -1,45 +1,38 @@
 
-import React, {useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import useStyles from './styles';
 import {AppBar, Toolbar, Typography, Button, IconButton, Badge} from '@material-ui/core'
 import { ShoppingCart, SupervisorAccount } from '@material-ui/icons';
 import logo from '../../assets/descarga.png';
 import { Link } from 'react-router-dom';
 import {useStateValue} from '../../StateProvider';
-import jwt from 'jwt-decode';
-import useToken from '../../utils/useToken';
+// import jwt from 'jwt-decode';
+// import useToken from '../../utils/useToken';
 
-export default function ButtonAppBar({token}) {
+export default function ButtonAppBar() {
   const classes = useStyles();
 
   const [{basket}, dispatch] = useStateValue();
 
-
-  // const validateUser = () => {
-  //   const user = jwt(token);
-  //   if (user.rol === 1){
-  //     return true;
-  //   }
-  //   return false;
-  // }
-  
-  /*--------------------------------------*/
-  // // const { token, setToken } = useToken();
-  // const Visible = ({ roles, children }) => {
-    
+  //const { token, setToken } = useToken();
+  // const [block, setBlock] = useState(true)
+  // console.log('token:', token);
+  // const isLoggedIn = () => {
+        
   //   if (token){
-  //     const user = jwt(token);
-  //     const rolesMatch = roles && user.rol === roles;
-  //     return Boolean(rolesMatch) && children;
+  //       const user = jwt(token);
+  //       setBlock(false);
   //   }
-  //   return false;
-  // };
+  //   else{
+  //     setBlock(true);
+  //   }    
+  // }
 
   // useEffect(() => {
-    
+  //   isLoggedIn()
   // }, [token])
- /*--------------------------------------*/
-  
+
+
   return (
     <div className={classes.root}>
       <AppBar position="fixed" className={classes.appBar}>
@@ -73,6 +66,7 @@ export default function ButtonAppBar({token}) {
           <Link to='/Login' className={classes.loginButton}>
             <Button color="inherit" className={classes.loginButton}>Login</Button>
           </Link>
+          {/* <Button color="inherit" disabled={block} className={classes.loginButton}>Logout</Button> */}
 
           
         </Toolbar>

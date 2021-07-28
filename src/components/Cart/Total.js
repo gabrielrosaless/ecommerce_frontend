@@ -5,7 +5,7 @@ import { getBasketTotal, getBasketCant } from '../../reducer';
 import {useStateValue} from '../../StateProvider';
 import useToken from '../../utils/useToken';
 import {actionTypes} from '../../reducer';
-
+import jwt from 'jwt-decode';
 
 const useStyles = makeStyles((theme) => ({
     root:{
@@ -21,14 +21,33 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-function Total() {
+function Total({cantidadTotal}) {
 
     const classes = useStyles();
 
     const [{basket}, dispatch] = useStateValue();
-    const { token, setToken } = useToken();
+    const {token, setToken } = useToken();
     const [compra, setCompra] = useState("");
+    //const [precioTotal, setPrecioTotal] = useState(0);
+    //const [cantidadTotal, setCantidadTotal] = useState(0);
+    const [blockeado, setBlockeado] = useState(true);
+    const [pedido, setPedido] = useState([])
+    
+    //setCantidadTotal(getBasketCant(basket));
 
+    const isLoggedIn = () => {
+        
+        if (token && basket.length > 0){
+            const user = jwt(token);
+
+            if (user.rol === 2){
+                setBlockeado(false);
+            }
+        }
+        else{
+            setBlockeado(true);
+        } 
+    }
     
     const clearBasket = () =>{
         dispatch({
@@ -37,29 +56,39 @@ function Total() {
         )
     }
 
-    const variables = {
-        productos:[]
-    }
+    // const variables = {
+    //     productos:[]
+    // }
 
     useEffect(() => {
         
         if (basket.length > 0){
-            
+            var productos = [];
             basket?.forEach(function(elemento) {
                 var aux = {};
                 aux.idProducto = elemento.id;
                 aux.cantidad = elemento.cantidad;
-                variables.productos.push(aux);
-            })  
+                productos.push(aux);
+                console.log('AUX:',aux);
+            }) 
+            
+            setPedido(productos);
         }
-    }, [basket])
-    
+    }, [basket,cantidadTotal])
+
+    useEffect(() => {
+        isLoggedIn()
+    }, [basket, token])
+
+
+    //console.log('Pedido:', pedido);
+
     const handleCheckOut = async () => {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json',
                         'authorize': token || "" },
-            body: JSON.stringify(variables)
+            body: JSON.stringify({'productos': pedido})
         };
 
         await fetch(`http://localhost:4000/api/pedidos/create`, requestOptions)
@@ -75,20 +104,13 @@ function Total() {
                 setCompra("Su numero de compra es: " + data[0].id);
                 clearBasket();
             })    
-        
-        
-        // .then(response => response.json())
-            // .then(data => setCompra(data[0].id))
-            // .catch(error => {
-            //     console.log("Hubo un problema con la petición Fetch: " + error.message);
-            // });
     }
     
     return (
         <div className={classes.root}>
             <h5>Total items: {getBasketCant(basket)}</h5>
             <h5>{accounting.formatMoney(getBasketTotal(basket),"$")}</h5>       
-            <Button className={classes.button} variant='contained' color='secondary' onClick={() => handleCheckOut()} >Realizar compra</Button>
+            <Button className={classes.button} variant='contained' disabled={blockeado} color='secondary' onClick={() => handleCheckOut()} >Realizar compra</Button>
             <div>{compra}</div>
         </div>
     )

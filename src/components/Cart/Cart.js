@@ -13,7 +13,9 @@ const Cart = () => {
 
 
     const [{basket}, dispatch] = useStateValue();
-
+    const [cantidadTotal, setCantidadTotal] = useState(0)
+    //console.log('total:', getBasketTotal(basket));
+    console.log('cantidad:', cantidadTotal);
 
     function FormRow(){
         if (basket?.length === 0){
@@ -27,7 +29,7 @@ const Cart = () => {
             <React.Fragment>
                 {basket?.map((item) => (
                     <Grid item xs={12} sm={8} md={6} lg={4}>
-                        <ItemCartContainer key={item.Id} item={item}/>
+                        <ItemCartContainer key={item.Id} item={item} setCantidadTotal={setCantidadTotal}/>
                     </Grid>))
                 }
             </React.Fragment>
@@ -48,7 +50,7 @@ const Cart = () => {
                 </Grid>
                 <Grid item xs={12} sm={4} md={3}>
                     <Typography align='center' gutterBottom variant='h4'>
-                        <Total/>
+                        <Total cantidadTotal={cantidadTotal}/>
                     </Typography>
                 </Grid>
             </Grid>

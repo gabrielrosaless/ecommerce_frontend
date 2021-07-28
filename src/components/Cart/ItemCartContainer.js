@@ -1,14 +1,15 @@
 import React , {useState, useEffect} from 'react';
-import {Card, CardHeader, CardMedia, CardContent, CardActions, IconButton, Typography} from '@material-ui/core';
+import {Card, CardHeader, CardMedia, CardActions, IconButton, Typography} from '@material-ui/core';
 import accounting from 'accounting';
 import DeleteIcon from '@material-ui/icons/Delete';
 import useStyles from './styles';
 import {ItemCount} from '../index';
-import {actionTypes, modifyBasketCant} from '../../reducer';
+import {actionTypes, getBasketCant, getBasketTotal, modifyBasketCant} from '../../reducer';
 import {useStateValue} from '../../StateProvider';
 
 
-export default function ItemCartContainer({item:{id,nombre,imagen,precio,stock,descripcion,cantidad}, handleCantChange}) {
+
+export default function ItemCartContainer({item:{id,nombre,imagen,precio,stock,descripcion,cantidad}, setCantidadTotal}) {
   const classes = useStyles();
 
   const [{basket}, dispatch] = useStateValue();
@@ -21,8 +22,12 @@ export default function ItemCartContainer({item:{id,nombre,imagen,precio,stock,d
 
   const [cant, setCant] = useState(cantidad);
 
-  
-  modifyBasketCant(basket,id,cant);
+  useEffect(() => {
+    modifyBasketCant(basket,id,cant);
+    const x = getBasketCant(basket);
+    setCantidadTotal(x);
+  }, [cant])
+
   
 
   return (

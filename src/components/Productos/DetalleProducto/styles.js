@@ -2,8 +2,11 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
     root: {
-      maxWidth: 345,
-      paddingTop: '5rem'
+      maxWidth: 500,
+      position: 'fixed',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)'
     },
     action:{
         marginTop: '1rem',

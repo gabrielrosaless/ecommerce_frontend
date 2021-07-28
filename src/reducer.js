@@ -28,6 +28,17 @@ export const modifyBasketCant = (basket, id , cant) => {
     })
 }
 
+export const generatePedido = (basket) => {
+    var productos = [];
+    basket?.forEach(function(elemento) {
+                var aux = {};
+                aux.idProducto = elemento.id;
+                aux.cantidad = elemento.cantidad;
+                productos.push(aux);
+                console.log('AUX:',aux);
+            }) 
+}
+
 
 export const getBasketCant = (basket) => {
     
